@@ -12,7 +12,7 @@ COPY . .
 
 EXPOSE 3001
 
-CMD [ "npm", "run", "dev" ]
+ENTRYPOINT [ "npm", "run", "dev" ]
 
 # Usar a imagem node:16.14-alpine como base
 
