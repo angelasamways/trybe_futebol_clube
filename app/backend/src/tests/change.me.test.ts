@@ -64,4 +64,11 @@ describe('Testando as rotas de Team', () => {
     expect(response).to.have.status(200)
     expect(response.body).to.deep.equal(teams)
   });
+
+  it('Testa /teams/id', async () => {
+    sinon.stub(Team, 'findByPk').resolves(teams[0] as Team)
+    const response = await chai.request(app).get('/teams/1').send()
+    expect(response).to.have.status(200)
+    expect(response.body).to.deep.equal(teams[0])
+  });
 });
