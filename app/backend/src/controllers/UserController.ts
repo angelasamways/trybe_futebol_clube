@@ -10,7 +10,7 @@ export default class UserController {
       const token = await this._userService.login(email, password);
       return res.status(200).json({ token });
     } catch (err) {
-      return res.status(401).json({ err });
+      return res.status(401).json({ message: 'Invalid email or password' });
     }
   };
 }
