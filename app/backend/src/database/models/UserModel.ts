@@ -2,29 +2,39 @@ import { STRING, INTEGER, Model } from 'sequelize';
 import db from '.';
 // import OtherModel from './OtherModel';
 
-class Team extends Model {
+class UserModel extends Model {
   declare id: number;
-  declare teamName: string;
+  declare username: string;
+  declare role: string;
+  declare email: string;
+  declare password: string;
 }
 
-Team.init({
+UserModel.init({
   id: {
     type: INTEGER,
     allowNull: false,
     primaryKey: true,
     autoIncrement: true,
   },
-  teamName: {
+  username: {
     type: STRING,
-    allowNull: false,
-    field: 'team_name',
+  },
+  role: {
+    type: STRING,
+  },
+  email: {
+    type: STRING,
+  },
+  password: {
+    type: STRING,
   },
 }, {
   // ... Outras configs
   underscored: true,
   sequelize: db,
-  modelName: 'teams',
+  modelName: 'user',
   timestamps: false,
 });
 
-export default Team;
+export default UserModel;
