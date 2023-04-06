@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import UserService from '../services/UserService';
-// import HTTPError from '../errors/HTTPErrors';
 
 export default class UserController {
   constructor(private _userService: UserService) {}
