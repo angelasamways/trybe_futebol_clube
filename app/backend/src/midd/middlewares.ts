@@ -18,15 +18,14 @@ function isValidLogin(req: Request, res: Response, next: NextFunction) {
 
 function isValidToken(req: Request, res: Response, next: NextFunction) {
   const { authorization } = req.headers;
-
-  if (!authorization) return res.status(401).json({ message: 'Token not found' });
-
-  const isValid = validateToken(authorization);
-  res.locals.user = isValid;
-
-  if (!isValid) return res.status(401).json({ message: 'Token must be a valid token' });
-
-  next();
+  try {
+    if (!authorization) return res.status(401).json({ message: 'Token not found' });
+    const isValid = validateToken(authorization);
+    res.locals.user = isValid;
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Token must be a valid token' });
+  }
 }
 
 export {
