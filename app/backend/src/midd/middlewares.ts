@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
+import { validateToken } from './JWT';
 
-export default function validateLogin(req: Request, res: Response, next: NextFunction) {
+function isValidLogin(req: Request, res: Response, next: NextFunction) {
   const validEmail = /\S+@\S+\.\S+/;
 
   const { email, password } = req.body;
@@ -14,3 +15,21 @@ export default function validateLogin(req: Request, res: Response, next: NextFun
 
   next();
 }
+
+function isValidToken(req: Request, res: Response, next: NextFunction) {
+  const { authorization } = req.headers;
+
+  if (!authorization) return res.status(401).json({ message: 'Token not found' });
+
+  const isValid = validateToken(authorization);
+  res.locals.user = isValid;
+
+  if (!isValid) return res.status(401).json({ message: 'Token must be a valid token' });
+
+  next();
+}
+
+export {
+  isValidLogin,
+  isValidToken,
+};
