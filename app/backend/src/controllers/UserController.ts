@@ -14,14 +14,9 @@ export default class UserController {
     }
   };
 
-  public tokenValidation = async (req: Request, res: Response): Promise<Response> => {
-    const { user } = req.body;
-    const { data } = user;
-    try {
-      const result = await this._userService.validationToken(data.email);
-      return res.status(200).json({ data: result.role });
-    } catch (err) {
-      return res.status(401).json({ message: 'Invalid email or password' });
-    }
+  tokenValidation = async (req: Request, res: Response) => {
+    const { token: { email } } = req.body;
+    const user = await this._userService.validationToken(email);
+    return res.status(200).json({ role: user.role });
   };
 }

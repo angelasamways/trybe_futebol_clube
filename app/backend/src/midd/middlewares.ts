@@ -3,7 +3,6 @@ import { validateToken } from './JWT';
 
 function isValidLogin(req: Request, res: Response, next: NextFunction) {
   const validEmail = /\S+@\S+\.\S+/;
-
   const { email, password } = req.body;
 
   if (!email || !password) return res.status(400).json({ message: 'All fields must be filled' });
@@ -18,11 +17,11 @@ function isValidLogin(req: Request, res: Response, next: NextFunction) {
 
 function isValidToken(req: Request, res: Response, next: NextFunction) {
   const { authorization } = req.headers;
+  if (!authorization) return res.status(401).json({ message: 'Token not found' });
   try {
-    if (!authorization) return res.status(401).json({ message: 'Token not found' });
     const isValid = validateToken(authorization);
-    res.locals.user = isValid;
-    next();
+    req.body.token = isValid;
+    return next();
   } catch (error) {
     return res.status(401).json({ message: 'Token must be a valid token' });
   }

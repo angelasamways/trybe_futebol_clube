@@ -14,9 +14,9 @@ userRouter.post(
   (req: Request, res: Response) => userController.login(req, res),
 );
 userRouter.get(
-  '/:role',
+  '/role',
   isValidToken,
-  (_req: Request, res: Response) => res.status(200).json({ role: res.locals.user.role }),
+  (req: Request, res: Response) => userController.tokenValidation(req, res),
 );
 
 export default userRouter;
