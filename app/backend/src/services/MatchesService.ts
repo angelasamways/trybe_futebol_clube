@@ -23,4 +23,8 @@ export default class MatchesService {
       where: { inProgress },
     });
   }
+
+  public async finishMatch(id: number) {
+    await this._matchesModel.update({ inProgress: false }, { where: { id } });
+  }
 }
