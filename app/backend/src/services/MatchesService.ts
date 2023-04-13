@@ -1,6 +1,11 @@
 import TeamModel from '../database/models/TeamModel';
 import Matches from '../database/models/MatchesModel';
 
+interface IScoreboard {
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+}
+
 export default class MatchesService {
   constructor(private _matchesModel: typeof Matches) {}
 
@@ -26,5 +31,10 @@ export default class MatchesService {
 
   public async finishMatch(id: number) {
     await this._matchesModel.update({ inProgress: false }, { where: { id } });
+  }
+
+  public async updateMatch(id: number, scoreboard: IScoreboard) {
+    const { homeTeamGoals, awayTeamGoals } = scoreboard;
+    await this._matchesModel.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
   }
 }
