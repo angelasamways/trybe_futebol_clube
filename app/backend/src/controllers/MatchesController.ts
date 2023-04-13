@@ -25,4 +25,9 @@ export default class MatchesController {
     await this._matchesService.updateMatch(+id, { ...req.body });
     return res.status(200).json({ message: 'Finished' });
   };
+
+  public insertMatch = async (req: Request, res: Response) => {
+    const result = await this._matchesService.insertMatch({ ...req.body });
+    return res.status(201).json(result);
+  };
 }

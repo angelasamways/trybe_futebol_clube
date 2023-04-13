@@ -9,7 +9,10 @@ const matchesRouter = Router();
 const matchesService = new MatchesService(Matches);
 const matchesController = new MatchesController(matchesService);
 
-matchesRouter.get('/', (req, res) => matchesController.getAll(req, res));
+matchesRouter.get(
+  '/',
+  (req, res) => matchesController.getAll(req, res),
+);
 matchesRouter.patch(
   '/:id/finish',
   isValidToken,
@@ -19,6 +22,11 @@ matchesRouter.patch(
   '/:id',
   isValidToken,
   (req, res) => matchesController.updateMatch(req, res),
+);
+matchesRouter.post(
+  '/',
+  isValidToken,
+  (req, res) => matchesController.insertMatch(req, res),
 );
 
 export default matchesRouter;
