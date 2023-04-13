@@ -5,6 +5,11 @@ export default class MatchesController {
   constructor(private _matchesService: MatchesService) {}
 
   public getAll = async (req: Request, res: Response) => {
+    if (req.query.inProgress) {
+      const resultProgress = await this._matchesService
+        .getInProgress(JSON.parse(req.query.inProgress as string));
+      return res.status(200).json(resultProgress);
+    }
     const result = await this._matchesService.getAll();
     return res.status(200).json(result);
   };

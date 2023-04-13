@@ -13,4 +13,14 @@ export default class MatchesService {
     });
     return result;
   }
+
+  public async getInProgress(inProgress: boolean) {
+    return this._matchesModel.findAll({
+      include: [
+        { model: TeamModel, as: 'homeTeam', attributes: { exclude: ['id'] } },
+        { model: TeamModel, as: 'awayTeam', attributes: { exclude: ['id'] } },
+      ],
+      where: { inProgress },
+    });
+  }
 }
