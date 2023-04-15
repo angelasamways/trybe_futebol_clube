@@ -2,6 +2,7 @@ import TeamModel from '../database/models/TeamModel';
 import Matches from '../database/models/MatchesModel';
 import IScoreboard from '../interfaces/IScoreboard';
 import IMatch from '../interfaces/IMatch';
+import HTTPError from '../errors/HTTPErrors';
 
 export default class MatchesService {
   constructor(private _matchesModel: typeof Matches) {}
@@ -35,7 +36,16 @@ export default class MatchesService {
     await this._matchesModel.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
   }
 
-  public async insertMatch(scoreboard: IMatch) {
+  public async insertMatch(scoreboard: IMatch): Promise<IMatch> {
+    const homeIdTeamModel = await TeamModel.findByPk(scoreboard.homeTeamId);
+    const awayIdTeamModel = await TeamModel.findByPk(scoreboard.awayTeamId);
+
+    if (!homeIdTeamModel || !awayIdTeamModel) {
+      throw new HTTPError(404, 'There is no team with such id!');
+    }
+    if (scoreboard.homeTeamId === scoreboard.awayTeamId) {
+      throw new HTTPError(422, 'It is not possible to create a match with two equal teams');
+    }
     return this._matchesModel.create({ ...scoreboard, inProgress: true });
   }
 }

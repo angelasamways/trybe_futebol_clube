@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import Matches from '../database/models/MatchesModel';
 import MatchesService from '../services/MatchesService';
 import MatchesController from '../controllers/MatchesController';
@@ -11,22 +11,22 @@ const matchesController = new MatchesController(matchesService);
 
 matchesRouter.get(
   '/',
-  (req, res) => matchesController.getAll(req, res),
+  (req: Request, res: Response) => matchesController.getAll(req, res),
 );
 matchesRouter.patch(
   '/:id/finish',
   isValidToken,
-  (req, res) => matchesController.finishMatch(req, res),
+  (req: Request, res: Response) => matchesController.finishMatch(req, res),
 );
 matchesRouter.patch(
   '/:id',
   isValidToken,
-  (req, res) => matchesController.updateMatch(req, res),
+  (req: Request, res: Response) => matchesController.updateMatch(req, res),
 );
 matchesRouter.post(
   '/',
   isValidToken,
-  (req, res) => matchesController.insertMatch(req, res),
+  (req: Request, res: Response) => matchesController.insertMatch(req, res),
 );
 
 export default matchesRouter;

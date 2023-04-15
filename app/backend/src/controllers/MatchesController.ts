@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import MatchesService from '../services/MatchesService';
+import HTTPError from '../errors/HTTPErrors';
 
 export default class MatchesController {
   constructor(private _matchesService: MatchesService) {}
@@ -27,7 +28,13 @@ export default class MatchesController {
   };
 
   public insertMatch = async (req: Request, res: Response) => {
-    const result = await this._matchesService.insertMatch({ ...req.body });
-    return res.status(201).json(result);
+    try {
+      const result = await this._matchesService.insertMatch({ ...req.body });
+      return res.status(201).json(result);
+    } catch (err: unknown) {
+      if (err instanceof HTTPError) {
+        return res.status(err.statusCode).json({ message: err.message });
+      }
+    }
   };
 }

@@ -4,7 +4,7 @@ import TeamModel from './TeamModel';
 // import OtherModel from './OtherModel';
 
 class Matches extends Model {
-  declare readonly id: number;
+  declare id: number;
   declare homeTeamId: number;
   declare homeTeamGoals: number;
   declare awayTeamId: number;
@@ -23,6 +23,9 @@ Matches.init({
     allowNull: false,
     type: INTEGER,
     field: 'home_team_id',
+    references: { model: 'teams', key: 'id' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   },
   homeTeamGoals: {
     allowNull: false,
@@ -33,13 +36,16 @@ Matches.init({
     allowNull: false,
     type: INTEGER,
     field: 'away_team_id',
+    references: { model: 'teams', key: 'id' },
+    onUpdate: 'CASCADE',
+    onDelete: 'CASCADE',
   },
   awayTeamGoals: {
     allowNull: false,
     type: INTEGER,
   },
   inProgress: {
-    allowNull: true,
+    allowNull: false,
     defaultValue: true,
     type: BOOLEAN,
   },
