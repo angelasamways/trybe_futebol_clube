@@ -8,6 +8,6 @@ const leaderboardController = new LeaderboardController(leaderboardService);
 
 const leaderBoardRouter = express.Router();
 
-leaderBoardRouter.get('/home', leaderboardController.getPerformance);
+leaderBoardRouter.get('/home', leaderboardController.getHome);
 
 export default leaderBoardRouter;

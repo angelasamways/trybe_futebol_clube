@@ -1,8 +1,8 @@
-import Team from '../database/models/TeamModel';
+import TeamModel from '../database/models/TeamModel';
 import ITeam from '../interfaces/ITeam';
 
 export default class TeamsService {
-  constructor(private _teamModel: typeof Team) {}
+  constructor(private _teamModel: typeof TeamModel) {}
 
   public async getAll() {
     const result = await this._teamModel.findAll();

@@ -1,11 +1,11 @@
 import TeamModel from '../database/models/TeamModel';
-import Matches from '../database/models/MatchesModel';
+import MatchesModel from '../database/models/MatchesModel';
 import IScoreboard from '../interfaces/IScoreboard';
 import IMatch from '../interfaces/IMatch';
 import HTTPError from '../errors/HTTPErrors';
 
 export default class MatchesService {
-  constructor(private _matchesModel: typeof Matches) {}
+  constructor(private _matchesModel: typeof MatchesModel) {}
 
   public async getAll() {
     const result = await this._matchesModel.findAll({

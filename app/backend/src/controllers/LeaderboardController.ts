@@ -4,8 +4,13 @@ import LeaderboardService from '../services/LeaderboardService';
 export default class LeaderboardController {
   constructor(private _leaderboardService = new LeaderboardService()) { }
 
-  public getPerformance = async (req: Request, res: Response): Promise<Response> => {
-    const [result] = await this._leaderboardService.getPerformance(req.baseUrl);
-    return res.status(200).json(result);
+  getHome = async (_req: Request, res: Response) => {
+    try {
+      const [results] = await this._leaderboardService.getHome();
+
+      return res.status(200).json(results);
+    } catch (error) {
+      return error;
+    }
   };
 }
