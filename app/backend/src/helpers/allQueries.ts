@@ -99,4 +99,9 @@ WHERE
 in_progress = false
 GROUP BY 
 name
+ORDER BY 
+totalPoints DESC, 
+totalVictories DESC, 
+goalsBalance DESC, 
+goalsFavor DESC
 `;
